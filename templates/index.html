@@ -10,21 +10,20 @@
         {% if challenge.suggested_by %}
             <h4>Suggested by {{ challenge.suggested_by }}</h4>
         {% endif %}
-            <h3>{{ challenge.date|date:"l d" }}<sup>{{ challenge.date|date:"S" }}</sup> {{ challenge.date|date:"F Y"}}</h3>
+            <h3 class="challenge__date">{{ challenge.date|date:"l d F Y" }}</h3>
     {% endif %}
 
     <script>
         var thread_id;
         $.getJSON("http://www.reddit.com/r/fountainpens/search.json?q=flair:Handwriting&sort=new&limit=1&restrict_sr=on", function(data) { 
             $.each(data.data.children, function(i,item){
-                console.log(item["data"]["id"]);
                 var thread_id = item["data"]["id"];
                 console.log(thread_id)
 
                 $.getJSON("https://www.reddit.com/r/fountainpens/comments/" + thread_id + "/.json", function(comments) {
-                    console.log(comments)
+                    console.log("Comments all: " + comments)
                     $.each(comments, function(i, comment) {
-                        console.log(comment.data.children[0]);
+                        console.log(comment.data.children);
                     });
                 });
             });

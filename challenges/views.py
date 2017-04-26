@@ -26,7 +26,7 @@ class IndexView(generic.TemplateView):
 
 class OldChallengesView(generic.ListView):
     template_name = "old_challenges.html"
-    queryset = models.Challenge.objects.exclude(date__exact=datetime.now()).filter(has_shown=True).values()
+    queryset = models.Challenge.objects.exclude(date__exact=datetime.now()).filter(has_shown=True).values().order_by("-date")
     paginate_by = 10
     context_object_name = "challenges"
 
