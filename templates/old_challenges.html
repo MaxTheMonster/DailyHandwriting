@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Past Challenges - {% endblock %}
+
+{% block content %}
+<h1>Past Challenges</h1>
+{% for challenge in challenges %}
+<h2>{{ challenge.title }}</h2>
+<h3>{{ challenge.date|date }}</h3>
+<hr>
+{% endfor %}
+{% endblock %} 

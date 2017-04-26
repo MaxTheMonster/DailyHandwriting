@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}{% if not error %}{{ challenge.title }} - {% endif %}{% endblock %}
+
+{% block content %}
+    {% if error %}
+        <h1>{{ error }}</h1>
+    {% else %}
+            <h1>{{ challenge.title }}</h1>
+        {% if challenge.suggested_by %}
+            <h4>Suggested by {{ challenge.suggested_by }}</h4>
+        {% endif %}
+            <h3>{{ challenge.date|date:"l d" }}<sup>{{ challenge.date|date:"S" }}</sup> {{ challenge.date|date:"F Y"}}</h3>
+    {% endif %}
+
+    <script>
+        var thread_id;
+        $.getJSON("http://www.reddit.com/r/fountainpens/search.json?q=flair:Handwriting&sort=new&limit=1&restrict_sr=on", function(data) { 
+            $.each(data.data.children, function(i,item){
+                console.log(item["data"]["id"]);
+                var thread_id = item["data"]["id"];
+                console.log(thread_id)
+
+                $.getJSON("https://www.reddit.com/r/fountainpens/comments/" + thread_id + "/.json", function(comments) {
+                    console.log(comments)
+                    $.each(comments, function(i, comment) {
+                        console.log(comment.data.children[0]);
+                    });
+                });
+            });
+           
+        });
+        
+     
+       // reddit.search("fountainpens").t('day').limit(1).sort("new").fetch();
+    </script>
+{% endblock %}
